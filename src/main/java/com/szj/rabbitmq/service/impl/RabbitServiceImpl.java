@@ -30,8 +30,8 @@ public class RabbitServiceImpl implements RabbitService {
     public void sendTestMq(@NonNull Object serializable, Integer testTime) {
         String correlationDataId = UUID.randomUUID().toString(true);
         CorrelationData correlationData = new CorrelationData(correlationDataId);
-        rabbitTemplate.convertAndSend(RabbitTestConfig.NURSE_USER_TEST_EXCHANGE,
-                RabbitTestConfig.NURSE_TEST_ROUTING,
+        rabbitTemplate.convertAndSend(RabbitTestConfig.TEST_EXCHANGE,
+                RabbitTestConfig.TEST_ROUTING,
                 serializable,
                 message -> {
                     //设置过期时间，分钟转换成毫秒

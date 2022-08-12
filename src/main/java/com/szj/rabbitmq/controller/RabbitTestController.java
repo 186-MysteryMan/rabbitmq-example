@@ -4,7 +4,6 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.szj.rabbitmq.service.RabbitService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;

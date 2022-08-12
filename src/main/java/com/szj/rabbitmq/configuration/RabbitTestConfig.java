@@ -13,21 +13,21 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitTestConfig {
 
-    public static final String NURSE_USER_TEST_QUEUE = "nurse_user_test_queue";
-    public static final String NURSE_USER_TEST_EXCHANGE = "nurse_user_test_exchange";
-    public static final String NURSE_TEST_ROUTING = "nurse_test_routing";
-    public static final String NURSE_USER_TEST_DEAD_QUEUE = "nurse_user_test_dead_queue";
-    public static final String NURSE_USER_TEST_DEAD_EXCHANGE = "nurse_user_test_dead_exchange";
-    public static final String NURSE_TEST_DEAD_ROUTING = "nurse_test_dead_routing";
+    public static final String TEST_QUEUE = "test_queue";
+    public static final String TEST_EXCHANGE = "test_exchange";
+    public static final String TEST_ROUTING = "routing";
+    public static final String TEST_DEAD_QUEUE = "test_dead_queue";
+    public static final String TEST_DEAD_EXCHANGE = "test_dead_exchange";
+    public static final String TEST_DEAD_ROUTING = "dead_routing";
 
     /**
      * 用户取消订单普通队列
      */
     @Bean("testQueue")
     public Queue queue() {
-        return QueueBuilder.durable(NURSE_USER_TEST_QUEUE)
-                .deadLetterExchange(NURSE_USER_TEST_DEAD_EXCHANGE)
-                .deadLetterRoutingKey(NURSE_TEST_DEAD_ROUTING)
+        return QueueBuilder.durable(TEST_QUEUE)
+                .deadLetterExchange(TEST_DEAD_EXCHANGE)
+                .deadLetterRoutingKey(TEST_DEAD_ROUTING)
                 .build();
     }
 
@@ -36,7 +36,7 @@ public class RabbitTestConfig {
      */
     @Bean("testExchange")
     public DirectExchange exchange() {
-        return ExchangeBuilder.directExchange(NURSE_USER_TEST_EXCHANGE).durable(true).build();
+        return ExchangeBuilder.directExchange(TEST_EXCHANGE).durable(true).build();
     }
 
     /**
@@ -44,7 +44,7 @@ public class RabbitTestConfig {
      */
     @Bean("testBinding")
     public Binding binding() {
-        return BindingBuilder.bind(queue()).to(exchange()).with(NURSE_TEST_ROUTING);
+        return BindingBuilder.bind(queue()).to(exchange()).with(TEST_ROUTING);
     }
 
     /**
@@ -52,7 +52,7 @@ public class RabbitTestConfig {
      */
     @Bean("testDeadQueue")
     public Queue deadQueue() {
-        return QueueBuilder.durable(NURSE_USER_TEST_DEAD_QUEUE).build();
+        return QueueBuilder.durable(TEST_DEAD_QUEUE).build();
     }
 
     /**
@@ -60,7 +60,7 @@ public class RabbitTestConfig {
      */
     @Bean("testDeadExchange")
     public DirectExchange deadExchange() {
-        return ExchangeBuilder.directExchange(NURSE_USER_TEST_DEAD_EXCHANGE).durable(true).build();
+        return ExchangeBuilder.directExchange(TEST_DEAD_EXCHANGE).durable(true).build();
     }
 
     /**
@@ -68,6 +68,6 @@ public class RabbitTestConfig {
      */
     @Bean("testBindingDead")
     public Binding bindingDead() {
-        return BindingBuilder.bind(deadQueue()).to(deadExchange()).with(NURSE_TEST_DEAD_ROUTING);
+        return BindingBuilder.bind(deadQueue()).to(deadExchange()).with(TEST_DEAD_ROUTING);
     }
 }
