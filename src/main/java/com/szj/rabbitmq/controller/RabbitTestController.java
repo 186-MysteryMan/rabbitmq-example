@@ -27,11 +27,11 @@ public class RabbitTestController {
     @Autowired
     private RabbitService rabbitService;
 
-    @PostMapping(value = "/v1/login/test/{time}/{value}")
+    @PostMapping(value = "/v1/login/test/{second}/{value}")
     @ApiOperation(value = "测试rabbitMq")
     @ApiOperationSupport(author = "盛攻杰")
-    public String weixinLogin(@PathVariable Integer time, @PathVariable String value) {
-        rabbitService.sendTestMq(value, time);
+    public String weixinLogin(@PathVariable Integer second, @PathVariable String value) {
+        rabbitService.sendTestMq(value, second);
         return "success";
     }
 }
