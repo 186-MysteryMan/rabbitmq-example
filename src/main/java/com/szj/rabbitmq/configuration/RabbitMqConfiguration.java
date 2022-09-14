@@ -27,10 +27,17 @@ public class RabbitMqConfiguration {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
+    /**
+     * 自定义rabbitTemplate，使其具有发送端可靠性
+     * @param connectionFactory
+     * @return
+     */
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate();
         rabbitTemplate.setConnectionFactory(connectionFactory);
+        //得到生产端发送到rabbitMq的结果，ack可以判断是否发送成功
+        //使用在RabbitServiceImpl中发送时传入correlationDataId作为追踪标识，可以从redis中取出此次发送的消息体。
         rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
             if (ack) {
                 if (Objects.nonNull(correlationData)) {

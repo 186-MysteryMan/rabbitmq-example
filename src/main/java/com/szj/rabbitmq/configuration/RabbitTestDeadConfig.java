@@ -13,15 +13,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitTestDeadConfig {
 
-    public static final String TEST_QUEUE = "test_queue";
-    public static final String TEST_EXCHANGE = "test_exchange";
-    public static final String TEST_ROUTING = "routing";
-    public static final String TEST_DEAD_QUEUE = "test_dead_queue";
-    public static final String TEST_DEAD_EXCHANGE = "test_dead_exchange";
-    public static final String TEST_DEAD_ROUTING = "dead_routing";
+    public static final String TEST_QUEUE = "test.queue";
+    public static final String TEST_EXCHANGE = "test.exchange";
+    public static final String TEST_ROUTING = "test.routing";
+    public static final String TEST_DEAD_QUEUE = "test.dead.queue";
+    public static final String TEST_DEAD_EXCHANGE = "test.dead.exchange";
+    public static final String TEST_DEAD_ROUTING = "test.dead.routing";
 
     /**
-     * 用户取消订单普通队列
+     * 声明普通队列和死信交换机绑定
      */
     @Bean("testQueue")
     public Queue queue() {
@@ -32,7 +32,7 @@ public class RabbitTestDeadConfig {
     }
 
     /**
-     * 用户取消订单普通交换机
+     * 普通交换机
      */
     @Bean("testExchange")
     public DirectExchange exchange() {
@@ -48,7 +48,7 @@ public class RabbitTestDeadConfig {
     }
 
     /**
-     * 用户取消订单死信队列
+     * 死信队列
      */
     @Bean("testDeadQueue")
     public Queue deadQueue() {
@@ -56,7 +56,7 @@ public class RabbitTestDeadConfig {
     }
 
     /**
-     * 用户取消订单死信交换机
+     * 死信交换机
      */
     @Bean("testDeadExchange")
     public DirectExchange deadExchange() {

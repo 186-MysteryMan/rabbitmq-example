@@ -12,7 +12,7 @@ com.szj.rabbitmq.configuration包下有rabbitMq配置
 
 2：延迟队列，解决上述缺陷，但是需要先安装延迟插件到rabbit中
 
-# 安装延迟队列步骤
+# 安装延迟队列步骤（软件版，docker版安装方式自行百度）
 插件放在plugins目录下
 将插件上传到linux，然后移动到 /usr/lib/rabbitmq/lib/rabbitmq_server-版本号/plugins 目录下（在lib目录下找到自己队列的版本目录）
 

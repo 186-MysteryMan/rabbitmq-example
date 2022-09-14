@@ -11,14 +11,14 @@ import java.util.Map;
  * @author GongJie Sheng
  * @version v1.0.0
  * @Date 2022_06_13 15:18
- * @description 延迟队列
+ * @description 延迟队列（必须先安装延迟插件）
  */
 @Configuration
 public class RabbitTestDelayConfig {
 
-    public static final String TEST_DELAY_QUEUE = "test_delay_queue";
-    public static final String TEST_DELAY_EXCHANGE = "test_delay_exchange";
-    public static final String TEST_DELAY_ROUTING = "dead_delay_routing";
+    public static final String TEST_DELAY_QUEUE = "test.delay.queue";
+    public static final String TEST_DELAY_EXCHANGE = "test.delay.exchange";
+    public static final String TEST_DELAY_ROUTING = "dead.delay.routing";
 
     /**
      * 延时队列
@@ -38,7 +38,9 @@ public class RabbitTestDelayConfig {
     @Bean("testDelayExchange")
     public CustomExchange delayDirectExchange() {
         Map<String, Object> args = Maps.newHashMap();
+        //直连模式
         args.put("x-delayed-type", "direct");
+        //指定类型为x-delayed-message，延迟消息交换机，必须要设置
         return new CustomExchange(TEST_DELAY_EXCHANGE, "x-delayed-message", true, false, args);
     }
 

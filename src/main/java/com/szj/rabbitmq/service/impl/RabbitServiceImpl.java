@@ -36,7 +36,7 @@ public class RabbitServiceImpl implements RabbitService {
                 RabbitTestDeadConfig.TEST_ROUTING,
                 serializable,
                 message -> {
-                    //设置过期时间，分钟转换成毫秒
+                    //设置过期时间，秒转换成毫秒
                     message.getMessageProperties().setExpiration(String.valueOf(testTime * 1000));
                     return message;
                 },
@@ -47,13 +47,15 @@ public class RabbitServiceImpl implements RabbitService {
 
     @Override
     public void sendTestDelayMq(@NonNull Object serializable, Integer testTime) {
+        //设置消息的id，用于追踪生产端是否成功发送到rabbitMq
         String correlationDataId = UUID.randomUUID().toString(true);
         CorrelationData correlationData = new CorrelationData(correlationDataId);
+        //此方法默认将消息持久化
         rabbitTemplate.convertAndSend(RabbitTestDelayConfig.TEST_DELAY_EXCHANGE,
                 RabbitTestDelayConfig.TEST_DELAY_ROUTING,
                 serializable,
                 message -> {
-                    //设置过期时间，分钟转换成毫秒
+                    //设置过期时间，秒转换成毫秒。实现延迟队列效果，必须设置头中含有延迟标识。
                     message.getMessageProperties().setHeader(MessageProperties.X_DELAY, (long) (testTime * 1000));
                     return message;
                 },
