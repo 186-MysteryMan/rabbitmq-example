@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Configuration;
  * @author GongJie Sheng
  * @version v1.0.0
  * @Date 2022_06_13 15:18
- * @description
+ * @description 死信队列
  */
 @Configuration
-public class RabbitTestConfig {
+public class RabbitTestDeadConfig {
 
     public static final String TEST_QUEUE = "test_queue";
     public static final String TEST_EXCHANGE = "test_exchange";

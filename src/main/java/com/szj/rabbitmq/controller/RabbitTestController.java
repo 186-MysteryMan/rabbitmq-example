@@ -26,11 +26,19 @@ public class RabbitTestController {
     @Autowired
     private RabbitService rabbitService;
 
-    @PostMapping(value = "/v1/login/test/{second}/{value}")
-    @ApiOperation(value = "测试rabbitMq")
+    @PostMapping(value = "/v1/login/test/dead/{second}/{value}")
+    @ApiOperation(value = "测试rabbitMq死信队列")
     @ApiOperationSupport(author = "盛攻杰")
-    public String weixinLogin(@PathVariable Integer second, @PathVariable String value) {
-        rabbitService.sendTestMq(value, second);
+    public String deadTest(@PathVariable Integer second, @PathVariable String value) {
+        rabbitService.sendTestDeadMq(value, second);
+        return "success";
+    }
+
+    @PostMapping(value = "/v1/login/test/delay/{second}/{value}")
+    @ApiOperation(value = "测试rabbitMq延迟队列插件")
+    @ApiOperationSupport(author = "盛攻杰")
+    public String delayTest(@PathVariable Integer second, @PathVariable String value) {
+        rabbitService.sendTestDelayMq(value, second);
         return "success";
     }
 }

@@ -31,7 +31,6 @@ public class RabbitMqConfiguration {
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate();
         rabbitTemplate.setConnectionFactory(connectionFactory);
-        rabbitTemplate.setMandatory(true);
         rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
             if (ack) {
                 if (Objects.nonNull(correlationData)) {
@@ -49,11 +48,6 @@ public class RabbitMqConfiguration {
                     redisTemplate.delete(correlationData.getId());
                 }
             }
-        });
-        rabbitTemplate.setReturnsCallback(returnedMessage -> {
-            String value = new String(returnedMessage.getMessage().getBody());
-            rabbitMqErrorLogService.saveRabbitMqErrorMessage(value, RabbitMqErrorLogEnum.PRODUCER_SEND);
-            log.error("收到未路由到队列的回调消息：" + value);
         });
         return rabbitTemplate;
     }

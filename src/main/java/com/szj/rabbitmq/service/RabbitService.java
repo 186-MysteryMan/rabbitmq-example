@@ -10,9 +10,18 @@ import org.springframework.lang.NonNull;
  */
 public interface RabbitService {
     /**
-     * 使用延迟队列发送消息推送MQ
+     * 使用死信队列发送消息推送MQ
+     *
      * @param serializable
      * @param testTime
      */
-    void sendTestMq(@NonNull Object serializable, Integer testTime);
+    void sendTestDeadMq(@NonNull Object serializable, Integer testTime);
+
+    /**
+     * 使用延迟队列发送消息推送MQ
+     *
+     * @param serializable
+     * @param testTime
+     */
+    void sendTestDelayMq(@NonNull Object serializable, Integer testTime);
 }

@@ -21,7 +21,7 @@ import java.io.IOException;
 @Component
 @Slf4j
 @ConditionalOnProperty(value = "spring.application.name", havingValue = "rabbitMq")
-public class RabbitTestConsumer {
+public class RabbitTestDelayConsumer {
 
     @Autowired
     private RabbitMqErrorLogService rabbitMqErrorLogService;
@@ -29,7 +29,7 @@ public class RabbitTestConsumer {
     /**
      * Test queue
      */
-    @RabbitListener(queues = RabbitTestConfig.TEST_DEAD_QUEUE)
+    @RabbitListener(queues = RabbitTestDelayConfig.TEST_DELAY_QUEUE)
     public void process(Channel channel, Message message) {
         String value = new String(message.getBody());
         try {
