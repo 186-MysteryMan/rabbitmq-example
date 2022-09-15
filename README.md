@@ -1,6 +1,6 @@
 # rabbitmq-example
 
-配置yml中的mysql，redis和rabbit账号密码
+配置yml中的redis和rabbit账号密码
 
 启动后访问：http://localhost:8080/doc.html#/default/%E6%B5%8B%E8%AF%95Rabbit/delayTestUsingPOST
 可以测试延迟队列插件

@@ -1,7 +1,5 @@
 package com.szj.rabbitmq.configuration;
 
-import com.szj.rabbitmq.enums.RabbitMqErrorLogEnum;
-import com.szj.rabbitmq.service.RabbitMqErrorLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -22,8 +20,6 @@ import java.util.Objects;
 @Slf4j
 public class RabbitMqConfiguration {
 
-    @Autowired
-    private RabbitMqErrorLogService rabbitMqErrorLogService;
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
@@ -49,7 +45,7 @@ public class RabbitMqConfiguration {
                 log.error("触发confirm回调函数,交换机收不到信息,原因:" + cause);
                 if (Objects.nonNull(correlationData)) {
                     String message = redisTemplate.opsForValue().get(correlationData.getId());
-                    rabbitMqErrorLogService.saveRabbitMqErrorMessage(message, RabbitMqErrorLogEnum.PRODUCER_SEND);
+                    //此处可以处理发送失败的消息，保存到数据库或者重新发送都可以。
                     log.error("发送失败消息对应的correlationDataId:" + correlationData.getId());
                     log.error("发送失败消息对应的message: " + message);
                     redisTemplate.delete(correlationData.getId());
