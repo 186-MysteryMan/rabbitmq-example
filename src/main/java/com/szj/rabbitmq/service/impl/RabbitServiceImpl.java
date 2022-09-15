@@ -32,6 +32,8 @@ public class RabbitServiceImpl implements RabbitService {
     public void sendTestDeadMq(@NonNull Object serializable, Integer testTime) {
         String correlationDataId = UUID.randomUUID().toString(true);
         CorrelationData correlationData = new CorrelationData(correlationDataId);
+        //同步到redis备份
+        redisTemplate.opsForValue().set(correlationDataId, serializable.toString());
         rabbitTemplate.convertAndSend(RabbitTestDeadConfig.TEST_EXCHANGE,
                 RabbitTestDeadConfig.TEST_ROUTING,
                 serializable,
@@ -41,8 +43,6 @@ public class RabbitServiceImpl implements RabbitService {
                     return message;
                 },
                 correlationData);
-        //同步到redis备份
-        redisTemplate.opsForValue().set(correlationDataId, serializable.toString());
     }
 
     @Override
@@ -50,6 +50,8 @@ public class RabbitServiceImpl implements RabbitService {
         //设置消息的id，用于追踪生产端是否成功发送到rabbitMq
         String correlationDataId = UUID.randomUUID().toString(true);
         CorrelationData correlationData = new CorrelationData(correlationDataId);
+        //同步到redis备份
+        redisTemplate.opsForValue().set(correlationDataId, serializable.toString());
         //此方法默认将消息持久化
         rabbitTemplate.convertAndSend(RabbitTestDelayConfig.TEST_DELAY_EXCHANGE,
                 RabbitTestDelayConfig.TEST_DELAY_ROUTING,
@@ -60,7 +62,5 @@ public class RabbitServiceImpl implements RabbitService {
                     return message;
                 },
                 correlationData);
-        //同步到redis备份
-        redisTemplate.opsForValue().set(correlationDataId, serializable.toString());
     }
 }
